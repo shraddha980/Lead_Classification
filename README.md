@@ -15,5 +15,11 @@ python main.py
 ```
 
 ```
-Hello
+These are the Git Commands that are used in this project:
+
+git add .
+git commit - m "Message"
+git push origin main -f
+git status
+git log
 ```
