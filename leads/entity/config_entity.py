@@ -1,7 +1,8 @@
 
 
-class DataIngestionConfig:
-    pass
+class DataIngestionConfig(self, df:list) pd.DataFrame:
+        df = pd.dtafreame pmonf()
+    
 
 class DataValidationConfig:
     pass
@@ -12,7 +13,7 @@ class DataTransformationConfig:
 class ModelTrainerConfig:
     pass
 
-class ModelPredictorConfig:
+class ModelEvaluationonfig:
     pass
 
 class ModelPusherConfig:

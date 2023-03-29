@@ -12,7 +12,7 @@ class DataTransformationArtifact:
 class ModelTrainerArtifact:
     pass
 
-class ModelPredictorArtifact:
+class ModelEvaluationArtifact:
     pass
 
 class ModelPusherArtifact:
