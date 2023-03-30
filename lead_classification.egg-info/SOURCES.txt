@@ -9,12 +9,13 @@ leads/__init__.py
 leads/config.py
 leads/exception.py
 leads/logger.py
+leads/predictor.py
 leads/utils.py
 leads/components/__init__.py
 leads/components/data_ingestion.py
 leads/components/data_transformation.py
 leads/components/data_validation.py
-leads/components/model_predictor.py
+leads/components/model_evaluation.py
 leads/components/model_pusher.py
 leads/components/model_trainer.py
 leads/entity/__init__.py
