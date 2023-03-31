@@ -1,13 +1,13 @@
 import pymongo
 
 # Provide the mongodb localhost url to connect python to mongodb.
-client = pymongo.MongoClient("mongodb://localhost:27017/neurolabDB")
+client = pymongo.MongoClient("mongodb+srv://shraddha123:shraddha123@cluster0.snrri9n.mongodb.net/?retryWrites=true&w=majority")
 
 # Database Name
-dataBase = client["neurolabDB"]
+dataBase = client["BANK_LEADS"]
 
 # Collection  Name
-collection = dataBase['Products']
+collection = dataBase['LEADS']
 
 # Sample data
 d = {'companyName': 'iNeuron',

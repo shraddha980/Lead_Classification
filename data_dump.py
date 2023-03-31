@@ -3,8 +3,7 @@ import pandas as pd
 import numpy as np  
 import json
 
-client = pymongo.MongoClient("mongodb+srv://ShraddhasCluster:shraddha123@cluster0.lmyl9ac.mongodb.net/?retryWrites=true&w=majority")
-
+client = pymongo.MongoClient("mongodb+srv://BackOrderPropagation:shraddha123@cluster0.y1c9hs5.mongodb.net/?retryWrites=true&w=majority")
 DATABASE_NAME ="BANK_LEADS"
 COLLECTION_NAME ="LEADS"
 
