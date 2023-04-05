@@ -6,18 +6,30 @@ class DataIngestionArtifact:
     train_file_path:str
     test_file_path:str
 
+@dataclass
 class DataValidationArtifact:
     report_file_path:str
-    base_file_path:str
 
+
+@dataclass
 class DataTransformationArtifact:
-    pass
+    transform_object_path:str
+    transformed_train_path:str
+    transformed_test_path:str
+    target_encoder_path:str
 
+@dataclass
 class ModelTrainerArtifact:
-    pass
+    model_path:str
+    f1_train_score:str
+    f1_test_score:str
 
+@dataclass
 class ModelEvaluationArtifact:
-    pass
+    is_model_accepted:bool
+    improved_accuracy:float
 
+@dataclass
 class ModelPusherArtifact:
-    pass
+    pusher_model_dir:str
+    saved_model_dir:str
