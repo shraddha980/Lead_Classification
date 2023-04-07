@@ -7,8 +7,8 @@ from leads.exception import LeadException
 FILE_NAME = "bank-additional-full.csv"
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
-TRANSFORMED_OBJECT_FILE_NAME = "transformer.pkl"
-TARGET_ENCODER_FILE_NAME = "target_encoder.pkl"
+TRANSFORMER_OBJECT_FILE_NAME = "transformer.pkl"
+TARGET_ENCODER_OBJECT_FILE_NAME = "target_encoder.pkl"
 MODEL_FILE_NAME = "model.pkl"
 
 class TrainingPipelineConfig:
@@ -61,7 +61,7 @@ class ModelTrainerConfig:
     
     def __init__(self,train_pipeline_config:TrainingPipelineConfig):
         self.model_trainer = os.path.join(train_pipeline_config.artifact_dir,"model_trainer")
-        self.model_trainer_path = os.path.join(self.model_trainer, "model", MODEL_FILE_NAME)
+        self.model_path = os.path.join(self.model_trainer, "model", MODEL_FILE_NAME)
         self.expected_score = 0.5
         self.overfitting_threshold = 0.1
         
