@@ -6,10 +6,13 @@ from leads.entity import config_entity, artifact_entity
 from leads.components import data_ingestion,data_transformation,data_validation, model_evaluation,model_pusher,model_trainer
 import os
 import sys
+from leads import utils
 from leads.predictor import ModelResolver
 from leads.utils import load_object, save_object
 from leads.entity.config_entity import ModelPusherConfig
 from leads.entity.artifact_entity import ModelPusherArtifact
+from leads.entity.artifact_entity import DataTransformationArtifact
+
 
 class ModelPusher():
 
@@ -34,17 +37,17 @@ class ModelPusher():
             target_encoder = load_object(file_path=self.data_transformation_artifact.target_encoder_path)
 
             logging.info(f"Saving object in Pusher Directory")
-            save_object(file_path=self.model_pusher_config.transform_object_path,obj = transformer)
-            save_object(file_path=self.model_pusher_config.model_path, obj = model)
-            save_object(file_path=self.model_pusher_config.target_encoder_path, obj=target_encoder)
+            save_object(file_path=self.model_pusher_config.pusher_transformer_path,obj = transformer)
+            save_object(file_path=self.model_pusher_config.pusher_model_path, obj = model)
+            save_object(file_path=self.model_pusher_config.pusher_target_encoder_path, obj=target_encoder)
 
             logging.info("Saving Model in Saved Model Directory")
-            transformer_path = self.model_resolver.get_latest_transformer_path()
+            transformer_path = self.model_resolver.get_latest_save_transformer_path()
             model_path = self.model_resolver.get_latest_save_model_path()
             target_encoder_path = self.model_resolver.get_latest_save_target_encoder_path()
 
-            save_object(file_path=transforer_path, obj = transformer)
-            save_object(file_path=model_path, obj=model_path)
+            save_object(file_path=transformer_path, obj = transformer)
+            save_object(file_path=model_path, obj=model)
             save_object(file_path=target_encoder_path, obj=target_encoder)
 
 

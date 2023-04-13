@@ -39,7 +39,7 @@ class ModelEvaluation():
           logging.info("If saved model has model we will compare which model is best trained or \
                          model from saved folder")
           latest_dir_path = self.model_resolver.get_latest_dir_path()
-          if latest_dir_path == None:
+          if latest_dir_path==None:
              model_eval_artifact = artifact_entity.ModelEvaluationArtifact(is_model_accepted=True, improved_accuracy=None)
              logging.info(f"Model Evaluation Artifact : {model_eval_artifact}")
              return model_eval_artifact

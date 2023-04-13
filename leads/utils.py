@@ -8,6 +8,7 @@ import pymongo
 import dill
 import pymongo
 import numpy as np
+import yaml
 
 client = pymongo.MongoClient("mongodb+srv://BackOrderPropagation:shraddha123@cluster0.y1c9hs5.mongodb.net/?retryWrites=true&w=majority")
 DATABASE_NAME ="BANK_LEADS"
@@ -46,7 +47,7 @@ def save_object(file_path:str, obj:object)-> None:
     except Exception as e:
         raise LeadException(e, sys)
     
-def load_object(file_path:str, obj:object)-> None:
+def load_object(file_path:str)-> None:
     try:
         if not os.path.exists(file_path):
             raise Exception(f"The file : {file_path} is not exsts")
@@ -71,9 +72,7 @@ def load_numpy_array_data(file_path:str)-> np.array:
     except Exception as e:
         raise LeadException(e, sys)
 
-
-
-def convert_columns_float(df:pd.DataFrame, exclude_columns:list)-> pd.DataFrame:
+def convert_columns_float(df:pd.DataFrame, exclude_columns:list)->pd.DataFrame:
     try:
         for column in df.columns:
             if column not in exclude_columns:
@@ -82,7 +81,7 @@ def convert_columns_float(df:pd.DataFrame, exclude_columns:list)-> pd.DataFrame:
     except Exception as e:
         raise LeadException(e, sys)
 
-def write_yaml(file_path, data:dict):
+def write_yaml_file(file_path, data:dict):
     try:
        file_dir = os.path.dirname(file_path)
        os.makedirs(file_dir,exist_ok=True)

@@ -3,6 +3,8 @@ import sys
 from datetime import datetime
 from leads.logger import logging
 from leads.exception import LeadException
+import pandas as pd 
+import numpy as np
 
 FILE_NAME = "bank-additional-full.csv"
 TRAIN_FILE_NAME = "train.csv"
@@ -44,23 +46,23 @@ class DataValidationConfig:
       
       def __init__(self,training_pipeline_config:TrainingPipelineConfig):
         self.data_validation_dir = os.path.join(training_pipeline_config.artifact_dir, "data_validation")
-        self.report_file_path = os.path.join(data_validation_dir,"report.yaml")
+        self.report_file_path = os.path.join(self.data_validation_dir,"report.yaml")
         self.missing_threshold:float = 0.7
-        self.base_file_path = os.path.join("bank-additional-full.csv")
+        self.base_file_path = pd.read_csv("/config/workspace/bank-additional-full.csv", sep=";")
 
 class DataTransformationConfig:
     
-    def __init__(self,train_pipeline_config:TrainingPipelineConfig):
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
         self.data_transformation_dir = os.path.join(training_pipeline_config.artifact_dir,"data_transformation")
-        self.transformed_object_path = os.path.join(data_transformation_dir, "transformer", TRANSFORMED_OBJECT_FILE_NAME)
-        self.transformed_train_path = os.path.join(data_transformation_dir, "transformed", TRAIN_FILE_NAME.replace("csv","npz"))
-        self.transformed_test_path = os.path.join(data_transformation_dir,"transformed",TEST_FILE_NAME.replace("csv","npz"))
-        self.target_encoder_path = os.path.join(data_transformation_dir,"target_encoder",TARGET_ENCODER_FILE_NAME)
+        self.transformed_object_path = os.path.join(self.data_transformation_dir, "transformer", TRANSFORMER_OBJECT_FILE_NAME)
+        self.transformed_train_path = os.path.join(self.data_transformation_dir, "transformed", TRAIN_FILE_NAME.replace("csv","npz"))
+        self.transformed_test_path = os.path.join(self.data_transformation_dir,"transformed",TEST_FILE_NAME.replace("csv","npz"))
+        self.target_encoder_path = os.path.join(self.data_transformation_dir,"target_encoder",TARGET_ENCODER_OBJECT_FILE_NAME)
 
 class ModelTrainerConfig:
     
-    def __init__(self,train_pipeline_config:TrainingPipelineConfig):
-        self.model_trainer = os.path.join(train_pipeline_config.artifact_dir,"model_trainer")
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        self.model_trainer = os.path.join(training_pipeline_config.artifact_dir,"model_trainer")
         self.model_path = os.path.join(self.model_trainer, "model", MODEL_FILE_NAME)
         self.expected_score = 0.5
         self.overfitting_threshold = 0.1

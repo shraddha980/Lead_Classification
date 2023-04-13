@@ -5,6 +5,9 @@ import sys
 from leads.logger import logging
 from leads.exception import LeadException
 from leads.components import data_ingestion, data_validation
+from leads.components.data_ingestion import DataIngestion
+from leads.entity import artifact_entity
+from leads.entity.artifact_entity import DataIngestionArtifact
 from leads.config import TARGET_COLUMN
 from sklearn.preprocessing  import RobustScaler
 from sklearn.impute import SimpleImputer
@@ -12,15 +15,16 @@ from imblearn.combine import SMOTETomek
 from sklearn.preprocessing import LabelEncoder
 from leads.entity import config_entity, artifact_entity
 from sklearn.pipeline import Pipeline
+from leads import utils
 
 class DataTransformation:
 
     def __init__(self, data_transformation_config:config_entity.DataTransformationConfig,
-                       data_transformation_artifact:artifact_entity.DataTransformationArtifact):
+                       data_ingestion_artifact:artifact_entity.DataIngestionArtifact):
             try:
                 logging.info(f"{'>>'*20} Data Transformation {'<<'*20}")
-                self.data_trasnsformation_config = data_transformation_config
-                self.data_transformation_artifact = data_transformation_artifact
+                self.data_transformation_config = data_transformation_config
+                self.data_ingestion_artifact = data_ingestion_artifact
             except Exception as e:
                 raise LeadException(e, sys)
 
@@ -42,8 +46,12 @@ class DataTransformation:
             train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
             test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
 
+            
             input_feature_train_df = train_df.drop(TARGET_COLUMN, axis=1)
+            input_feature_train_df = pd.get_dummies(train_df, columns= [feature for feature in train_df.columns if train_df[feature].dtype== 'O'])
+
             input_feature_test_df = test_df.drop(TARGET_COLUMN, axis=1)
+            input_feature_test_df = pd.get_dummies(test_df, columns= [feature for feature in test_df.columns if test_df[feature].dtype== 'O'])
 
             target_feature_train_df = train_df[TARGET_COLUMN]
             target_feature_test_df = test_df[TARGET_COLUMN]
@@ -54,7 +62,7 @@ class DataTransformation:
             target_feature_train_arr = label_encoder.transform(target_feature_train_df)
             target_feature_test_arr = label_encoder.transform(target_feature_test_df)
 
-            transformation_pipeline = DataTransformation.get_data_transformer_object()
+            transformation_pipeline = DataTransformation.get_transformer_object()
             transformation_pipeline.fit(input_feature_train_df)
 
             input_feature_train_arr = transformation_pipeline.transform(input_feature_train_df)
@@ -75,11 +83,11 @@ class DataTransformation:
             utils.save_numpy_array_data(file_path=self.data_transformation_config.transformed_train_path, array=train_arr)
             utils.save_numpy_array_data(file_path=self.data_transformation_config.transformed_test_path, array=test_arr)
 
-            utils.save_object(file_path=self.data_transformation_config.transform_object_path, obj=transformation_pipeline)
+            utils.save_object(file_path=self.data_transformation_config.transformed_object_path, obj=transformation_pipeline)
             utils.save_object(file_path=self.data_transformation_config.target_encoder_path, obj=label_encoder)
 
             data_transformation_artifact = artifact_entity.DataTransformationArtifact(
-                 transform_object_path=self.data_transformation_config.transform_object_path,
+                 transform_object_path=self.data_transformation_config.transformed_object_path,
                  transformed_train_path=self.data_transformation_config.transformed_train_path,
                  transformed_test_path=self.data_transformation_config.transformed_test_path,
                  target_encoder_path=self.data_transformation_config.target_encoder_path

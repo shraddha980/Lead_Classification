@@ -1,12 +1,15 @@
 import os
 import sys
 from leads.entity import artifact_entity,config_entity
+from leads.entity.artifact_entity import DataTransformationArtifact
 from leads.config import TARGET_COLUMN
 from leads.components import data_ingestion,data_transformation,data_validation
 from leads.logger import logging
 from leads.exception import LeadException
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
-from xgboost import XGBClassifier
+from leads import utils
+from leads.entity.artifact_entity import ModelTrainerArtifact
 
 class ModelTrainer:
 
@@ -14,14 +17,14 @@ class ModelTrainer:
                       data_transformation_artifact:artifact_entity.DataTransformationArtifact):
         try:
             logging.info(f"{'>>'*20} Model Trainer {'>>'*20}")
-            self.model_trainer_config:model_trainer_config
-            self.data_transformation_artifact: data_transformation_artifact
+            self.model_trainer_config = model_trainer_config
+            self.data_transformation_artifact = data_transformation_artifact
         except Exception as e:
             raise LeadException(e,sys)
 
     def train_model(self,x,y):
         try:
-            xgb_clf = XGBClassifier()
+            xgb_clf = RandomForestClassifier()
             xgb_clf.fit(x,y)
             return xgb_clf
         except Exception as e:
@@ -42,11 +45,11 @@ class ModelTrainer:
 
             logging.info(f"Making Predictions and calculating F1_score for X_train")
             yhat_train = model.predict(x_train)
-            f1_train_score = model.f1_score(y_true=y_pred,y_pred=yhat_train)
+            f1_train_score = f1_score(y_true=y_train,y_pred=yhat_train)
 
             logging.info(f"Making Predications and calculating f1_score for X_tes")
             yhat_test = model.predict(x_test)
-            f1_test_score = model.f1_score(y_true=y_test,y_pred=yhat_test)
+            f1_test_score = f1_score(y_true=y_test,y_pred=yhat_test)
 
             logging.info(f"train_score = {f1_train_score} and test_score = {f1_test_score}")
 
@@ -68,7 +71,7 @@ class ModelTrainer:
 
             logging.info(f"Preparing Model Artifact")
             
-            model_trainer_artifact = self.artifact_entity.model_trainer_artifact(
+            model_trainer_artifact = artifact_entity.ModelTrainerArtifact(
                 model_path= self.model_trainer_config.model_path ,
                 f1_train_score= f1_train_score ,
                 f1_test_score= f1_test_score)
