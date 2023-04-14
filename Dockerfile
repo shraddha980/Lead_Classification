@@ -1,6 +1,8 @@
 FROM python:3.9-slim-bullseye
-RUN python3 -m venv /opt/venv
-RUN . /opt/venv/bin/activate
+RUN python -m venv tutorial-env
+RUN tutorial-env\Scripts\activate.bat
+USER tutorial-env
+RUN mkdir /app
 COPY . /app/
 WORKDIR /app/
 RUN pip install --upgrade pip
