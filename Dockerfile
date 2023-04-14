@@ -1,6 +1,6 @@
-FROM python:3.8
-USER root
-RUN mkdir /app
+FROM python:3.9-slim-bullseye
+RUN python3 -m venv /opt/venv
+RUN . /opt/venv/bin/activate
 COPY . /app/
 WORKDIR /app/
 RUN pip install --upgrade pip
