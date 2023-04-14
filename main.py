@@ -16,7 +16,6 @@ d = {'companyName': 'iNeuron',
 
 # Insert above records in the collection
 rec = collection.insert_one(d)
-
 # Lets Verify all the record at once present in the record with all the fields
 all_record = collection.find()
 
