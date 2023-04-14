@@ -6,7 +6,8 @@ RUN apt-get update
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 COPY requirements.txt .
-RUN pip install --upgrade pip 
+RUN pip install --upgrade pip
+RUN pip --use-pep517 
 RUN pip install -r requirements.txt
 ENV AIRFLOW_HOME = "/app/airflow"
 ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT = 1000
