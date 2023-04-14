@@ -1,5 +1,6 @@
+FROM python:3.8
 RUN pip install virtualenv
-RUN virtualenv -p python3.5 virtual
+RUN virtualenv -p python virtual
 RUN /bin/bash -c "source /virtual/bin/activate"
 WORKDIR /app/
 COPY . /app/
