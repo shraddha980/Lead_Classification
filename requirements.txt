@@ -17,5 +17,5 @@ pandas==2.0.0
 PyYAML
 numpy
 scikit-learn
-apache-airflow
+apache-airflow==2.5.1
 -e .
