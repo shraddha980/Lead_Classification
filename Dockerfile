@@ -21,11 +21,8 @@ FROM python:3.9-slim
 
 COPY --from=builder /opt/venv /opt/venv
 
-WORKDIR /app
 
-ENV PATH="/opt/venv/bin:$PATH"
-RUN pip install --upgrade pip  
-RUN pip install -Ur requirements.txt
+
 ENV AIRFLOW_HOME = "/app/airflow"
 ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT = 1000
 ENV AIRFLOW_CORE_ENABLE_XCOM_PICKLING = True
