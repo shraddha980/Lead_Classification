@@ -1,6 +1,6 @@
 FROM python:3.9-slim-bullseye
 RUN python -m venv tutorial-env
-RUN tutorial-env\Scripts\activate.bat
+RUN tutorial-env/bin/activate
 USER tutorial-env
 RUN mkdir /app
 COPY . /app/
