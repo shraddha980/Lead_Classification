@@ -1,26 +1,10 @@
-FROM python:3.9-slim as compiler
-ENV PYTHONUNBUFFERED 1
-
+RUN pip install virtualenv
+RUN virtualenv -p python3.5 virtual
+RUN /bin/bash -c "source /virtual/bin/activate"
 WORKDIR /app/
-
-RUN python -m venv /opt/venv
-# Enable venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-COPY ./requirements.txt /app/requirements.txt
+COPY . /app/
 RUN pip install --upgrade pip  
 RUN pip install -Ur requirements.txt
-
-FROM python:3.9-slim as runner
-WORKDIR /app/
-COPY --from=compiler /opt/venv /opt/venv
-
-# Enable venv
-ENV PATH="/opt/venv/bin:$PATH"
-COPY . /app/
-CMD ["python", "app.py", ]
-
-
 ENV AIRFLOW_HOME = "/app/airflow"
 ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT = 1000
 ENV AIRFLOW_CORE_ENABLE_XCOM_PICKLING = True
