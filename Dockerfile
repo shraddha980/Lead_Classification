@@ -1,10 +1,8 @@
-FROM python:3.9-slim as builder
-WORKDIR /app
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-RUN apt-get update 
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+FROM python:3.8
+USER root
+RUN mkdir /app
+COPY . /app/
+WORKDIR /app/
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip3 install --upgrade pip setuptools
