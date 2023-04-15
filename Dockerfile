@@ -7,7 +7,8 @@ RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 COPY requirements.txt .
 RUN pip install --upgrade pip
-RUN pip install setuptools wheel 
+RUN pip3 install --upgrade pip setuptools
+#RUN pip install setuptools wheel 
 RUN pip install -r requirements.txt
 ENV AIRFLOW_HOME = "/app/airflow"
 ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT = 100000
