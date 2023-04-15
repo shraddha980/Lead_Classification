@@ -12,7 +12,7 @@ RUN pip install -r requirements.txt
 #RUN airflow webserver
 #RUN airflow initdb
 #RUN airflow scheduler
-RUN export AIRFLOW_HOME=~/airflow
+ENV export AIRFLOW_HOME=~/airflow
 ENV AIRFLOW_HOME = "/app/airflow"
 ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT = 100000
 ENV AIRFLOW_CORE_ENABLE_XCOM_PICKLING = True
