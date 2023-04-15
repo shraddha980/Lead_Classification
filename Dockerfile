@@ -9,9 +9,9 @@ RUN pip3 install --upgrade pip setuptools
 RUN pip install wheel
 RUN pip install pyproject-toml
 RUN pip install -r requirements.txt
-RUN airflow webserver
-RUN airflow initdb
-RUN airflow scheduler
+#RUN airflow webserver
+#RUN airflow initdb
+#RUN airflow scheduler
 RUN export AIRFLOW_HOME=~/airflow
 ENV AIRFLOW_HOME = "/app/airflow"
 ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT = 100000
