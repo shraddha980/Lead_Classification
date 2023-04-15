@@ -8,7 +8,8 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip3 install --upgrade pip setuptools
-#RUN pip install setuptools wheel 
+RUN pip install wheel
+RUN pip install pyproject-toml
 RUN pip install -r requirements.txt
 ENV AIRFLOW_HOME = "/app/airflow"
 ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT = 100000
