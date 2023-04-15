@@ -9,7 +9,7 @@ from airflow.operators.python import PythonOperator
 
 with DAG(
     'sensor_training',
-    default_args={'retries': 2},
+    default_args={'retries': 10},
     # [END default_args]
     description='Sensor Fault Detection',
     schedule_interval="@weekly",
@@ -24,7 +24,7 @@ with DAG(
         input_dir = "/app/input_files"
         #creating directory
         os.makedirs(input_dir,exist_ok=True)
-        os.system(f"aws s3 sync s3://{bucket_name}/input_files /app/input_files")
+        os.system(f"aws s3 sync s3://{bucket_name}/input_files/app/input_files")
 
     def batch_prediction(**kwargs):
         from sensor.pipeline.batch_prediction import start_batch_prediction
