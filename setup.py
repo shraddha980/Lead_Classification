@@ -13,7 +13,7 @@ def get_requirements()->List[str]:
     
     #if HYPHEN_E_DOT in requirement_list:
         #requirement_list.remove(HYPHEN_E_DOT)
-    #return requirement_list
+    return requirement_list
 
 setup(
     name="Bank_leads",
