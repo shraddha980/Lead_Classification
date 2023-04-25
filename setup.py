@@ -11,8 +11,8 @@ def get_requirements()->List[str]:
         requirement_list = requirement_file.readlines()
     requirement_list = [requirement_name.replace("\n", "") for requirement_name in requirement_list]
     
-    #if HYPHEN_E_DOT in requirement_list:
-        #requirement_list.remove(HYPHEN_E_DOT)
+    if HYPHEN_E_DOT in requirement_list:
+        requirement_list.remove(HYPHEN_E_DOT)
     return requirement_list
 
 setup(

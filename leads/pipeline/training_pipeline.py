@@ -15,7 +15,7 @@ from leads.entity import config_entity
 from leads.entity import artifact_entity
 
 
-if __name__ == "__main__":
+def start_training_pipeline():
     try:
         training_pipeline_config = config_entity.TrainingPipelineConfig()
         data_ingestion_config = config_entity.DataIngestionConfig(training_pipeline_config=training_pipeline_config)

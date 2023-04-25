@@ -18,5 +18,6 @@ SQLAlchemy==1.3.24
 dill==0.3.2
 dnspython==2.1.0
 pandas==1.3.5
+-e .
 
 

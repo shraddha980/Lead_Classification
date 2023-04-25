@@ -1,5 +1,6 @@
 import os
 import sys
+from leads import logger
 from leads.logger import logging
 from leads.exception import LeadException
 import pandas as pd
@@ -47,14 +48,14 @@ def save_object(file_path:str, obj:object)-> None:
     except Exception as e:
         raise LeadException(e, sys)
     
-def load_object(file_path:str)-> None:
+def load_object(file_path:str,)-> object:
     try:
         if not os.path.exists(file_path):
             raise Exception(f"The file : {file_path} is not exsts")
             with open(file_path, "rb") as file_obj:
                 return dill.load(file_obj)
     except Exception as e:
-            raise LeadException(e, sys)
+            raise LeadException(e, sys) from e
 
 def save_numpy_array_data(file_path: str, array = np.array):
     try:

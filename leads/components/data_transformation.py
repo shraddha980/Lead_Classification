@@ -58,6 +58,7 @@ class DataTransformation:
 
             label_encoder = LabelEncoder()
             label_encoder.fit(target_feature_train_df)
+            logging.info(f"Label Encoded Target Feature: {target_feature_train_df.shape[0]}")
 
             target_feature_train_arr = label_encoder.transform(target_feature_train_df)
             target_feature_test_arr = label_encoder.transform(target_feature_test_df)

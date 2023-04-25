@@ -6,6 +6,7 @@ from leads.utils import load_object
 from leads.logger import logging
 from leads.exception import LeadException
 from leads.entity import config_entity, artifact_entity
+from leads.entity.artifact_entity import DataIngestionArtifact,DataTransformationArtifact,DataValidationArtifact, ModelTrainerArtifact
 from leads.components import data_ingestion, data_transformation, data_validation
 from leads.config import TARGET_COLUMN
 from sklearn.metrics import f1_score
@@ -21,10 +22,10 @@ class ModelEvaluation():
                ):
       try:
         logging.info(f"{'>>'*20} Model Evaluation {'<<'*20}")
-        self.model_eval_config = model_eval_config,
-        self.data_ingestion_artifact = data_ingestion_artifact,
-        self.data_transformation_artifact = data_transformation_artifact,
-        self.model_trainer_artifact = model_trainer_artifact,
+        self.model_eval_config = model_eval_config
+        self.data_ingestion_artifact = data_ingestion_artifact
+        self.data_transformation_artifact = data_transformation_artifact
+        self.model_trainer_artifact = model_trainer_artifact
         self.model_resolver = ModelResolver()
       except Exception as e:
         raise LeadException(e, sys)
@@ -56,11 +57,11 @@ class ModelEvaluation():
 
           logging.info("Currently trained model objects")
           current_transformer= load_object(file_path= self.data_transformation_artifact.transform_object_path)
-          current_model= load_object(file_path=self.data_transformation_artifact.model_path)
+          current_model= load_object(file_path=self.model_trainer_artifact.model_path)
           current_target_encoder=load_object(file_path=self.data_transformation_artifact.target_encoder_path)
 
           test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
-          target_df = test_df[TARGET_COLUMN]
+          target_df = test_df["y"]
           y_true = target_encoder.transform(target_df)
 
           input_feature_name = list(transformer.feature_names_in_)
