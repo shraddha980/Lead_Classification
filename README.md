@@ -31,8 +31,10 @@ ECR_LOGIN_URL                  :       public.ecr.aws/l0v7a0q5
 ECR_REPOSITORY_NAME     :      repo-name
 BUKET_NAME                      :      bank-leads2
 MONGO_DB_URL =    mongodb+srv://BackOrderPropagation:shraddha123@cluster0.y1c9hs5.mongodb.net/?retryWrites=true&w=majority
-
+'''
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker ubuntu
 newgrp docker
+'''
+nnnn
