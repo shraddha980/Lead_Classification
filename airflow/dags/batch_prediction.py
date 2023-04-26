@@ -9,7 +9,7 @@ from airflow.operators.python import PythonOperator
 
 with DAG(
     'sensor_training',
-    default_args={'retries': 10},
+    default_args={'retries': 2},
     # [END default_args]
     description='Sensor Fault Detection',
     schedule_interval="@weekly",
