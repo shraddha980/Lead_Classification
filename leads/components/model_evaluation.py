@@ -54,6 +54,7 @@ class ModelEvaluation():
           transformer = load_object(file_path = transformer_path)
           model = load_object(file_path = model_path)
           target_encoder = load_object(file_path = target_encoder_path)
+          logging.info(f"Target_Encoder = : {target_encoder}")
 
           logging.info("Currently trained model objects")
           current_transformer= load_object(file_path= self.data_transformation_artifact.transform_object_path)
@@ -62,7 +63,7 @@ class ModelEvaluation():
 
           test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
           target_df = test_df["y"]
-          y_true = target_encoder.transform(target_df)
+          y_true = target_encoder.fit_transform(target_df)
 
           input_feature_name = list(transformer.feature_names_in_)
           input_arr = transformer.transform(test_df[input_feature_name])
@@ -90,12 +91,4 @@ class ModelEvaluation():
         except Exception as e:
           raise LeadException(e, sys)
 
-
-
-
-
-
-
-
-        except Exception as e:
-          raise LeadException(e, sys)
+        

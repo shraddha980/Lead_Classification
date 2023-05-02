@@ -50,7 +50,7 @@ class ModelResolver():
        except Exception as e:
         raise e
 
-    def get_latest_target_encoder_path(self)->str:
+    def get_latest_target_encoder_path(self):
         try:
             latest_dir = self.get_latest_dir_path()
             if latest_dir is None:

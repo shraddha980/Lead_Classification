@@ -2,9 +2,9 @@ import pymongo
 import pandas as pd  
 import numpy as np  
 import json
-from dotevnv import load_dotenv
+from dotenv import load_dotenv
 print(f"Loading environment variable from env file")
-load_dotenv
+
 
 client = pymongo.MongoClient("mongodb+srv://BackOrderPropagation:shraddha123@cluster0.y1c9hs5.mongodb.net/?retryWrites=true&w=majority")
 DATABASE_NAME ="BANK_LEADS"
